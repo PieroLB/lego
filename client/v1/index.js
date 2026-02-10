@@ -124,8 +124,8 @@ for (const deal of deals) {
   communities[deal.community].push(deal);
 }
 console.log(communities);
-for (const communityName of Object.keys(communities)) {
-  console.log(communityName, communities[communityName].length);
+for (const [communityName, communityDeals] of Object.entries(communities)) {
+  console.log(communityName, communityDeals.length);
 }
 
 // 🎯 TODO 9: Sort by price for each community
