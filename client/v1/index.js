@@ -140,6 +140,11 @@ for (const [communityName, communityDeals] of Object.entries(communities)) {
 // 🎯 TODO 10: Sort by date for each community
 // 1. For each set, sort the deals by date, from old to recent
 // 2. Log the sort
+for (const [communityName, communityDeals] of Object.entries(communities)) {
+  const communityDealsSorted = sortListByDate(communityDeals, "published", 1);
+  console.log(communityName);
+  console.table(communityDealsSorted);
+}
 
 /**
  * 🧥
