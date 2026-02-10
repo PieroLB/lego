@@ -118,6 +118,15 @@ console.log(averageDiscount);
 //
 // 2. Log the variable
 // 3. Log the number of deals by community
+const communities = {};
+for (const deal of deals) {
+  if (!communities[deal.community]) communities[deal.community] = [];
+  communities[deal.community].push(deal);
+}
+console.log(communities);
+for (const communityName of Object.keys(communities)) {
+  console.log(communityName, communities[communityName].length);
+}
 
 // 🎯 TODO 9: Sort by price for each community
 // 1. For each community, sort the deals by discount price, from highest to lowest
