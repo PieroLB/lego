@@ -92,6 +92,9 @@ console.table(dealsWithDiscount50To75);
 // 🎯 TODO 7: Average percentage discount
 // 1. Determine the average percentage discount of the deals
 // 2. Log the average
+const averageDiscount =
+  deals.reduce((sum, deal) => sum + deal.discount, 0) / numberOfDeals;
+console.log(averageDiscount);
 
 /**
  * 🏎
