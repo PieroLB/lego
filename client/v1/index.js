@@ -534,3 +534,5 @@ console.log(profitability);
 // 🎯 LAST TODO: Save in localStorage
 // 1. Save MY_FAVORITE_DEALERS in the localStorage
 // 2. log the localStorage
+localStorage.setItem("MY_FAVORITE_DEALERS", JSON.stringify(VINTED));
+console.log(JSON.parse(localStorage.getItem("MY_FAVORITE_DEALERS")));
