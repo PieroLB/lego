@@ -451,8 +451,13 @@ const p25VintedListPrice = vintedListSorted[p25Index].price;
 console.log(p25VintedListPrice);
 
 // 🎯 TODO 12: Very old listed items
-// // 1. Log if we have very old items (true or false)
-// // A very old item is an item `published` more than 3 weeks ago.
+// 1. Log if we have very old items (true or false)
+// A very old item is an item `published` more than 3 weeks ago.
+const veryOldItemList = VINTED.filter(
+  (p) => new Date() - new Date(p.published) >= 1000 * 60 * 60 * 24 * 7 * 3,
+);
+const hasVeryOldItems = veryOldItemList.length > 0;
+console.log(hasVeryOldItems);
 
 // 🎯 TODO 13: Find a specific item
 // 1. Find the item with the uuid `f2c5377c-84f9-571d-8712-98902dcbb913`
