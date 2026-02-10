@@ -494,6 +494,9 @@ camera.favorite = true;
 
 // 1. Log `sealedCamera` and `camera` variables
 // 2. What do you notice?
+console.log(sealedCamera);
+console.log(camera);
+// We noticed that both variable 'sealedCamera' and 'camera' have the new property 'favorite'
 
 // we make (again) a new assignment again
 sealedCamera = {
@@ -504,7 +507,8 @@ sealedCamera = {
   uuid: "18751705-536e-5c1f-9a9d-383a3a629df5",
 };
 
-// 3. Update `camera` property with `favorite` to true WITHOUT changing sealedCamera properties
+// 3. Update `camera` property with `favorite` to false WITHOUT changing sealedCamera properties
+camera.favorite = false;
 
 // 🎯 TODO 11: Compute the profitability
 // From a specific deal called `deal`
