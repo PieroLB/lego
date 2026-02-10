@@ -63,6 +63,11 @@ console.log(listCommunityNames.length);
 // 1. Create a function to sort the deals by price
 // 2. Create a variable and assign it the list of sets by price from lowest to highest
 // 3. Log the variable
+const sortList = (list, value, order = -1) => {
+  return [...list].sort((a, b) => order * (a[value] - b[value]));
+};
+const sortDealsByPriceAsc = sortList(deals, "price", 1);
+console.table(sortDealsByPriceAsc);
 
 // 🎯 TODO 5: Sort by date
 // 1. Create a function to sort the deals by date
