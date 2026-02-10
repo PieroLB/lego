@@ -470,6 +470,11 @@ console.log(specificItem || "item not found sry :(");
 // 🎯 TODO 14: Delete a specific item
 // 1. Delete the item with the uuid `f2c5377c-84f9-571d-8712-98902dcbb913`
 // 2. Log the new list of items
+const removedItemIndex = VINTED.findIndex(
+  (p) => p.uuid === "f2c5377c-84f9-571d-8712-98902dcbb913",
+);
+if (removedItemIndex !== -1) VINTED.splice(removedItemIndex, 1);
+console.log(VINTED);
 
 // 🎯 TODO 5: Save a favorite item
 // We declare and assign a variable called `sealedCamera`
