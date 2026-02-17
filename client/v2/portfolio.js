@@ -24,6 +24,7 @@ This endpoint accepts the following optional query string parameters:
 // current deals on the page
 let currentDeals = [];
 let currentPagination = {};
+let currentSize = 6;
 
 // instantiate the selectors
 const selectShow = document.querySelector("#show-select");
@@ -145,10 +146,16 @@ const render = (deals, pagination) => {
  * Select the number of deals to display
  */
 selectShow.addEventListener("change", async (event) => {
-  const deals = await fetchDeals(
-    currentPagination.currentPage,
-    parseInt(event.target.value),
-  );
+  currentSize = parseInt(event.target.value);
+  const deals = await fetchDeals(currentPagination.currentPage, currentSize);
+
+  setCurrentDeals(deals);
+  render(currentDeals, currentPagination);
+});
+
+selectPage.addEventListener("change", async (event) => {
+  currentPagination.currentPage = parseInt(event.target.value);
+  const deals = await fetchDeals(currentPagination.currentPage, currentSize);
 
   setCurrentDeals(deals);
   render(currentDeals, currentPagination);
