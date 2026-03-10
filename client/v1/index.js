@@ -55,7 +55,13 @@ console.log(numberOfDeals);
 // 1. Create a variable and assign it the list of shopping community name only
 // 2. Log the variable
 // 3. Log how many shopping communities we have
-const listCommunityNames = [...new Set(deals.map((d) => d.community))];
+console.log("listCommunityNames");
+let listCommunityNames = [];
+for (const deal of deals) {
+  if (!listCommunityNames.includes(deal.community))
+    listCommunityNames.push(deal.community);
+}
+// const listCommunityNames = [...new Set(deals.map((d) => d.community))];
 console.log(listCommunityNames);
 console.log(listCommunityNames.length);
 
@@ -84,9 +90,11 @@ console.table(dealsSortByDateDesc);
 // 🎯 TODO 6: Filter a specific percentage discount range
 // 1. Filter the list of deals between 50% and 75%
 // 2. Log the list
-const dealsWithDiscount50To75 = deals.filter(
-  (d) => d.discount >= 50 && d.discount <= 75,
-);
+
+const dealsWithDiscount = (min, max) => {
+  return deals.filter((d) => d.discount >= min && d.discount <= max);
+};
+const dealsWithDiscount50To75 = dealsWithDiscount(50, 75);
 console.table(dealsWithDiscount50To75);
 
 // 🎯 TODO 7: Average percentage discount

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -17,12 +17,26 @@
       </div>
       <div id="page">
         <label for="page-select">Go to page:</label>
-        <select name="page" id="page-select"> </select>
+        <select name="page" id="page-select"></select>
       </div>
       <div id="filters">
-        <span>By best discount</span>
-        <span>By most commented</span>
-        <span>By hot deals</span>
+        <span>Filters : </span>
+        <div>
+          <input type="checkbox" name="filter-discount" id="filter-discount" />
+          <label for="filter-discount">By best discount (>= 50%)</label>
+        </div>
+        <div>
+          <input
+            type="checkbox"
+            name="filter-commented"
+            id="filter-commented"
+          />
+          <label for="filter-commented">By most commented</label>
+        </div>
+        <div>
+          <input type="checkbox" name="filter-deals" id="filter-deals" />
+          <label for="filter-deals">By hot deals</label>
+        </div>
       </div>
       <div id="sort">
         <label for="sort-select">Sort:</label>
@@ -38,7 +52,7 @@
       <h2>Lego sets</h2>
       <div>
         <label>Lego set id:</label>
-        <select id="lego-set-id-select"></select> 
+        <select id="lego-set-id-select"></select>
       </div>
     </section>
     <section id="indicators">

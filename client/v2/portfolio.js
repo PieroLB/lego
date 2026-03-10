@@ -28,10 +28,14 @@ let currentSize = 6;
 
 // instantiate the selectors
 const selectShow = document.querySelector("#show-select");
+selectShow.value = 6;
 const selectPage = document.querySelector("#page-select");
+selectPage.value = 1;
 const selectLegoSetIds = document.querySelector("#lego-set-id-select");
 const sectionDeals = document.querySelector("#deals");
 const spanNbDeals = document.querySelector("#nbDeals");
+const filterDiscount = document.querySelector("#filter-discount");
+filterDiscount.checked = false;
 
 /**
  * Set global value
@@ -146,8 +150,10 @@ const render = (deals, pagination) => {
  * Select the number of deals to display
  */
 selectShow.addEventListener("change", async (event) => {
-  currentSize = parseInt(event.target.value);
-  const deals = await fetchDeals(currentPagination.currentPage, currentSize);
+  const deals = await fetchDeals(
+    currentPagination.currentPage,
+    parseInt(event.target.value),
+  );
 
   setCurrentDeals(deals);
   render(currentDeals, currentPagination);
@@ -155,9 +161,32 @@ selectShow.addEventListener("change", async (event) => {
 
 selectPage.addEventListener("change", async (event) => {
   currentPagination.currentPage = parseInt(event.target.value);
-  const deals = await fetchDeals(currentPagination.currentPage, currentSize);
+  const deals = await fetchDeals(
+    currentPagination.currentPage,
+    currentDeals.length,
+  );
 
   setCurrentDeals(deals);
+  render(currentDeals, currentPagination);
+});
+
+const filterDeals = (deals, filterType) => {
+  switch (filterType) {
+    case "discount":
+      return deals.filter((d) => d.discount && d.discount >= 50);
+  }
+};
+filterDiscount.addEventListener("click", async () => {
+  const deals = await fetchDeals(
+    currentPagination.currentPage,
+    currentDeals.length,
+  );
+  const dealsFiltered = filterDeals(deals.result, "discount");
+
+  setCurrentDeals({
+    currentDeals: dealsFiltered,
+    currentPagination: deals.currentPagination,
+  });
   render(currentDeals, currentPagination);
 });
 
