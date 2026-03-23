@@ -37,6 +37,10 @@
           <input type="checkbox" name="filter-deals" id="filter-deals" />
           <label for="filter-deals">By hot deals</label>
         </div>
+        <div>
+          <input type="checkbox" name="filter-favorite" id="filter-favorite" />
+          <label for="filter-favorite">By favorite</label>
+        </div>
       </div>
       <div id="sort">
         <label for="sort-select">Sort:</label>
@@ -67,22 +71,23 @@
       </div>
       <div>
         <span>p5 sales price value</span>
-        <span>0</span>
+        <span id="p5">0</span>
       </div>
       <div>
         <span>p25 sales price value</span>
-        <span>0</span>
+        <span id="p25">0</span>
       </div>
       <div>
         <span>p50 sales price value</span>
-        <span>0</span>
+        <span id="p50">0</span>
       </div>
       <div>
         <span>Lifetime value</span>
-        <span>10 days</span>
+        <span id="lifetime">n/a</span>
       </div>
     </section>
     <section id="deals"></section>
+    <section id="sales"></section>
     <script type="text/javascript" charset="UTF-8" src="utils.js"></script>
     <script type="text/javascript" charset="UTF-8" src="portfolio.js"></script>
   </body>

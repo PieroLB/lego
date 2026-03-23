@@ -1,0 +1,62 @@
+[
+  {
+    "_id": "9f778cb0-19f5-59d7-8e2a-4d945627d43e",
+    "link": "https://www.dealabs.com/bons-plans/lego-harry-potter-le-chateau-et-le-domaine-de-poudlard-76419-via-3498-sur-la-carte-fidelite-3014312",
+    "retail": 139.9,
+    "price": 104.92,
+    "discount": 25,
+    "temperature": 159.27,
+    "photo": "https://static-pepper.dealabs.com/threads/raw/atFEj/3014312_1/re/300x300/qt/60/3014312_1.jpg",
+    "comments": 4,
+    "published": 1741307146,
+    "title": "Jeu de construction Lego Harry Potter - Le Chateau et le Domaine de Poudlard 76419",
+    "id": "76419",
+    "community": "dealabs",
+    "uuid": "9f778cb0-19f5-59d7-8e2a-4d945627d43e"
+  },
+  {
+    "_id": "8af44c86-9dbf-54e5-88b7-5f4968b79237",
+    "link": "https://www.dealabs.com/bons-plans/lego-duplo-10981-la-carotte-qui-pousse-jouet-a-empiler-via-50-cagnottes-3013870",
+    "retail": 9.9,
+    "price": 4.95,
+    "discount": 50,
+    "temperature": 59.17,
+    "photo": "https://static-pepper.dealabs.com/threads/raw/1haEp/3013870_1/re/300x300/qt/60/3013870_1.jpg",
+    "comments": 0,
+    "published": 1741258964,
+    "title": "Lego Duplo 10981 La Carotte qui Pousse",
+    "id": "10981",
+    "community": "dealabs",
+    "uuid": "8af44c86-9dbf-54e5-88b7-5f4968b79237"
+  },
+  {
+    "_id": "2f55f254-daf6-5e67-8545-03ee33fb86e6",
+    "link": "https://www.dealabs.com/bons-plans/lego-speed-champions-la-voiture-de-course-de-formule-1-mclaren-2023-3015577",
+    "retail": 18.6,
+    "price": 17.99,
+    "discount": 3,
+    "temperature": 55.92,
+    "photo": "https://static-pepper.dealabs.com/threads/raw/0b26R/3015577_1/re/300x300/qt/60/3015577_1.jpg",
+    "comments": 5,
+    "published": 1741508742,
+    "title": "LEGO Speed Champions 76919 - La Voiture de Course de Formule 1 McLaren 2023",
+    "id": "76919",
+    "community": "dealabs",
+    "uuid": "2f55f254-daf6-5e67-8545-03ee33fb86e6"
+  },
+  {
+    "_id": "43d3f363-d9be-5f8f-9541-8f7609e23fbb",
+    "link": "https://www.dealabs.com/bons-plans/lego-botanicals-10348-erable-rouge-du-japon-3016010",
+    "retail": 59.99,
+    "price": 44.99,
+    "discount": 25,
+    "temperature": 121.5,
+    "photo": "https://static-pepper.dealabs.com/threads/raw/abcd/3016010_1/re/300x300/qt/60/3016010_1.jpg",
+    "comments": 18,
+    "published": 1741550000,
+    "title": "LEGO Botanicals 10348 - Erable Rouge du Japon",
+    "id": "10348",
+    "community": "dealabs",
+    "uuid": "43d3f363-d9be-5f8f-9541-8f7609e23fbb"
+  }
+]

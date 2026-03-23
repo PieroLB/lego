@@ -1,0 +1,54 @@
+{
+  "10348": [
+    {
+      "_id": "3b867e87-54a6-52c0-83a1-d624a28fceca",
+      "link": "https://www.vinted.fr/items/8192584303-lego-10348",
+      "price": 46.9,
+      "title": "Lego 10348",
+      "published": 1771274720,
+      "uuid": "3b867e87-54a6-52c0-83a1-d624a28fceca"
+    },
+    {
+      "_id": "3cbd7f1c-c4e6-5adf-826b-ce87831fe5cc",
+      "link": "https://www.vinted.fr/items/8186726898-lego-botanicals-10348-japanischer-roter-ahorn-bonsai",
+      "price": 42.7,
+      "title": "LEGO Botanicals 10348 Japanischer Roter Ahorn Bonsai",
+      "published": 1771237107,
+      "uuid": "3cbd7f1c-c4e6-5adf-826b-ce87831fe5cc"
+    },
+    {
+      "_id": "c2c9013b-c20c-5202-b789-97ebcda85446",
+      "link": "https://www.vinted.fr/items/805039343-notice-lego-set-10348",
+      "price": 3.85,
+      "title": "Notice Lego set 10348",
+      "published": 1769644298,
+      "uuid": "c2c9013b-c20c-5202-b789-97ebcda85446"
+    }
+  ],
+  "42156": [
+    {
+      "_id": "ee27f120-956e-56fb-81a4-e4e6183d66cd",
+      "link": "https://www.vinted.fr/items/5091013043-supporto-da-muro-per-lego-peugeot",
+      "price": 7.0,
+      "title": "Supporto da muro per lego Peugeot",
+      "published": 1727028413,
+      "uuid": "ee27f120-956e-56fb-81a4-e4e6183d66cd"
+    },
+    {
+      "_id": "ba4a61d9-6638-576b-a247-fbcfe77602dc",
+      "link": "https://www.vinted.fr/items/5923778458-lego-technic-42156-peugeot-9x8",
+      "price": 105.7,
+      "title": "Lego technic 42156 Peugeot 9x8",
+      "published": 1741275629,
+      "uuid": "ba4a61d9-6638-576b-a247-fbcfe77602dc"
+    },
+    {
+      "_id": "649c7047-1e8b-5410-8ba0-3f6d222eb844",
+      "link": "https://www.vinted.fr/items/5939490617-lego-technic-42156-peugeot-9x8-24h-de-mans-neuf",
+      "price": 147.7,
+      "title": "Lego technic 42156 Peugeot 9x8 24h de Mans neuf",
+      "published": 1741531161,
+      "uuid": "649c7047-1e8b-5410-8ba0-3f6d222eb844"
+    }
+  ]
+}

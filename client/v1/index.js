@@ -499,7 +499,7 @@ let sealedCamera = {
 
 // we make a copy of `sealedCamera` to `camera` variable
 // and set a new property `favorite` to true
-let camera = sealedCamera;
+let camera = { ...sealedCamera };
 
 camera.favorite = true;
 
@@ -519,7 +519,9 @@ sealedCamera = {
 };
 
 // 3. Update `camera` property with `favorite` to false WITHOUT changing sealedCamera properties
-camera.favorite = false;
+camera = { ...sealedCamera, favorite: false };
+console.log(sealedCamera);
+console.log(camera);
 
 // 🎯 TODO 11: Compute the profitability
 // From a specific deal called `deal`
@@ -545,5 +547,8 @@ console.log(profitability);
 // 🎯 LAST TODO: Save in localStorage
 // 1. Save MY_FAVORITE_DEALERS in the localStorage
 // 2. log the localStorage
-localStorage.setItem("MY_FAVORITE_DEALERS", JSON.stringify(VINTED));
+localStorage.setItem(
+  "MY_FAVORITE_DEALERS",
+  JSON.stringify(MY_FAVORITE_DEALERS),
+);
 console.log(JSON.parse(localStorage.getItem("MY_FAVORITE_DEALERS")));
