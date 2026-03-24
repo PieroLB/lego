@@ -1,71 +1,77 @@
-import * as cheerio from 'cheerio';
-import { v5 as uuidv5 } from 'uuid';
+import * as cheerio from "cheerio";
+import { v5 as uuidv5 } from "uuid";
 
-const COOKIE = "";
+const COOKIE =
+  "v_udt=L3pvbFRsVUptc2c1SXlwWmdTaUFmdk0wTW04Vi0tS2FGa3ZndEI2Kzl5R0U4Yy0tbHRUcGR0bWNaL3Y3OStxbjRnU3RWUT09; anon_id=a9d442aa-4c8e-4508-a457-9b74b00580f5; anonymous-locale=fr; v_sid=81dd5f42458673e67fdcc2350bf92f6e; cf_clearance=u8TY.ZyXGMpLVkNHxvZLTlicF_53hfRSpb9pCWV1mi0-1774369944-1.2.1.1-uJ2XkPTxqZHgGW_rbr9i9n9lQlKQru678af9zFwHqrYEsPU4O0Adl5gJAoTUytLJ.Ym8zhl7SZTf6TeaZLkwYiuQlIwE7_AYnlzP8t.pcAZSZdCBYWYEV_LWgvDo8.FQ5qsyQdxY8fUMUcxMzh5BmVKPBFoCpfLqc61VSjIAf_NnfSlraZtDz.jSuRnACHv.FAT0Sy2qu6gy3zcNu7vEQVNX622GWB0tueYmnhEVZ2w; non_dot_com_www_domain_cookie_buster=1; refresh_token_web=eyJraWQiOiJFNTdZZHJ1SHBsQWp1MmNObzFEb3JIM2oyN0J1NS1zX09QNVB3UGlobjVNIiwiYWxnIjoiUFMyNTYifQ.eyJhcHBfaWQiOjQsImF1ZCI6ImZyLmNvcmUuYXBpIiwiY2xpZW50X2lkIjoid2ViIiwiZXhwIjoxNzc0OTc0NzQzLCJpYXQiOjE3NzQzNjk5NDMsImlzcyI6InZpbnRlZC1pYW0tc2VydmljZSIsInB1cnBvc2UiOiJyZWZyZXNoIiwic2NvcGUiOiJwdWJsaWMiLCJzaWQiOiJhYzcyNmY1Ni0xNzc0MzY5OTQzIn0.EVXadBACgQGSQhk2tiO9BNkv-rNrUobVRFmtJFH9UebCgCczbkNUgcW3OK7VyIGmOUHFCT-EFkLjKBWjxmvbgodw5yzKTqVt-l4ooHsM_F6yiUnoG2ZkkE96uq0hWnrRCcY5fUCGyG0AKEIkf_VDDa93GskBursaW2zaI3rFZot0G1TdMFd8oHbzovHBTPhHFEkuk87LaaA7vqlREIGikPrcOJUyO7spFwGVkRQqYH4szVrmHxPmzKGIFflbVRszyLmbDen_HwqKza_2PG3rAagB49byEdYyg92TSBeuCl_OrWrFV01McajUYhOBG5_J9K4zyYSqYrWpV-iG3kO0WQ; access_token_web=eyJraWQiOiJFNTdZZHJ1SHBsQWp1MmNObzFEb3JIM2oyN0J1NS1zX09QNVB3UGlobjVNIiwiYWxnIjoiUFMyNTYifQ.eyJhcHBfaWQiOjQsImF1ZCI6ImZyLmNvcmUuYXBpIiwiY2xpZW50X2lkIjoid2ViIiwiZXhwIjoxNzc0Mzc3MTQzLCJpYXQiOjE3NzQzNjk5NDMsImlzcyI6InZpbnRlZC1pYW0tc2VydmljZSIsInB1cnBvc2UiOiJhY2Nlc3MiLCJzY29wZSI6InB1YmxpYyIsInNpZCI6ImFjNzI2ZjU2LTE3NzQzNjk5NDMifQ.c-QJCGYYftzWqU-WIItjiRzDwu24Y4L6UoBwYEDN_dJBKNglc7pNB0fmUPNBlzf1yDrPW33s54sBV7BTZMCYzjey_0l9pPE14n49Q3XcoMdC7V7KFJgQ0Hd8OynRKpuX59IoIomm73_yw2-qLTiSCYJXkk_5ZTynXr_cZ6dTYk0GcuMoE7ZokvOu7zS4EsEXzcUPbH1OWeNblcnu5klM6ockJ4DhZSwGUcc6FXlgs4INBrrjxIKX4g8_QAuRO5Wfo4KIwIJL7pfrOl96HbcoIpQ4yZN26FrmG24Vx1ngXbTAxe8SCjL2q_9mMNk4X7hEEcj6Jgr_EfI38N5IW8Gsog; __cf_bm=WTcweLPxF.8TTrWAZbRSw15nNwp2Fs5F5eWTkwFq9M8-1774369944.863014-1.0.1.1-rooqZaf6BOoft1jvz_KznadiAVK.RUJIrtmdjBe5ulyn5JJSoh_37cuZBE6ubVb6YCbXzrHUgBHKNGBUyr._KbzP1GxPcke5ZZFL8Nml5eU9JJVaa1fJang5hn7uAJZsn8zvXojPZoHW7m47U.nf7g; banners_ui_state=SUCCESS; is_shipping_fees_applied_info_banner_dismissed=false; viewport_size=1167; _vinted_fr_session=RWFXUW1PZmJmS2RFYzZ1N05LeDB6N1F0SHRUemg3dDRLQlVMZGRtb3RQQkdBd2c1RmdFcDJwdmt3RzBuWHBUeGt0ZnQ4cTZBa2UxZFVscGdRMXpwaWp1TFhoZnU2OUJGMHZUdGFLeEFwYXZyZ2t5UmhmNEx2U0grandtSGpuYmpCaXFidWxaeWJtaGtLdnc1Wm5TU1F1NU5ScmNja3Q3eWpNdEJkT2V3T2l3RXFnVmI1M3VDWEFpdUplcjd3SEh5bHhBTHcxa25VSERZN1F2eVVLZjl5NE5HR2RpUStsRXMzeUFBM3R0VW04dWQ3TVJ1YVBKTTIvTU9DMEZNK2FqQS0tclRtOUYxYVl3a2dSQ3YvVSszSnJJUT09--fdab4ad80ddf45890a932104e8e21b0795bd7489; OptanonConsent=isGpcEnabled=0&datestamp=Tue+Mar+24+2026+17%3A32%3A52+GMT%2B0100+(heure+normale+d%E2%80%99Europe+centrale)&version=202602.1.0&hosts=&groups=C0001%3A1%2CC0002%3A0%2CC0003%3A0%2CC0004%3A0%2CC0005%3A0%2CV2STACK42%3A0%2CC0035%3A0%2CC0038%3A0&landingPath=NotLandingPage&consentId=a9d442aa-4c8e-4508-a457-9b74b00580f5&browserGpcFlag=0&geolocation=FR%3BIDF&isIABGlobal=false; OptanonAlertBoxClosed=2026-03-24T16:32:32.813Z; eupubconsent-v2=CQhkbtgQhkbtgAcABBFRCXFgAAAAAEPgAAwIAAAWZABMNCogjLIgACBQEAIEACgrCACgQBAAAkDRAQAmDAhyBgAusJkAIAUAAwQAgABBgACAAASABCIAIACAQAgQCBQABgAQBAQAMDAAGACxEAgABAdAxTAggECwASIyqDTAlAASCAlsqEEgCBBXCFIscAggREwUAAAIABQAAAD4WAhJKCViQQBcQXQAAEAAAUQIECKQswBBQGaLQVgScBkaYBk-YJklOgyAJghIyDIhNUEg8UxRAAAA.YAAACHwAAAAA.ILNtR_G__bXlv-Tb36bpkeYxf99hr7sQxBgbJs24FzLvW7JwC32E7NEzatqYKmRIAu3TBIQNtHIjURUChKIgVrzDsaEyUoTtKJ-BkiDMRY2JYCFxvm4pjWQCZ4vr_51d9mT-N7dr-2dzyy5hnv3a9fuS1UJicKYetHfn8ZBKT-_IU9_x-_4v4_MbpEm-eS1v_tGtt43d64tP_dpuxt-Tyffz___f72_e7X__c__33_-qXX_77_4A; OTAdditionalConsentString=2~~dv.20.43.55.57.61.70.83.89.93.108.117.122.124.135.143.144.147.149.159.161.184.192.196.211.228.230.236.239.255.259.266.272.286.291.311.313.314.320.322.323.327.358.367.370.371.385.407.415.424.429.430.436.445.469.486.491.494.495.522.523.540.550.560.568.574.576.584.587.591.621.723.737.797.798.803.820.827.839.864.899.904.922.938.955.959.979.981.985.986.1003.1027.1031.1033.1046.1047.1048.1051.1053.1067.1092.1095.1097.1099.1107.1109.1126.1135.1143.1149.1152.1162.1166.1186.1188.1192.1205.1215.1220.1226.1227.1230.1252.1268.1270.1276.1284.1290.1301.1307.1312.1329.1342.1345.1356.1365.1403.1415.1416.1419.1421.1423.1440.1449.1455.1495.1512.1514.1516.1525.1540.1548.1555.1558.1570.1577.1579.1583.1584.1598.1603.1616.1638.1651.1653.1659.1660.1667.1677.1678.1682.1697.1699.1703.1712.1716.1720.1721.1725.1732.1735.1745.1750.1753.1765.1782.1786.1800.1808.1810.1825.1827.1832.1838.1840.1843.1845.1859.1870.1878.1880.1882.1889.1898.1911.1917.1928.1929.1942.1944.1958.1962.1963.1964.1967.1968.1969.1978.1985.1987.2003.2027.2035.2038.2039.2044.2047.2052.2056.2064.2068.2069.2072.2074.2084.2088.2090.2103.2107.2109.2115.2124.2130.2133.2135.2137.2140.2141.2147.2156.2166.2177.2186.2205.2213.2216.2219.2220.2222.2223.2224.2225.2227.2234.2251.2253.2271.2275.2279.2282.2295.2299.2309.2310.2312.2316.2322.2325.2328.2331.2335.2336.2343.2354.2358.2359.2370.2373.2376.2377.2387.2400.2403.2405.2406.2407.2410.2411.2414.2415.2416.2418.2425.2427.2440.2447.2453.2461.2465.2468.2472.2477.2484.2486.2488.2498.2506.2510.2517.2526.2527.2531.2532.2534.2535.2542.2552.2559.2563.2564.2567.2568.2569.2571.2572.2575.2577.2579.2583.2584.2589.2595.2596.2604.2605.2608.2609.2610.2612.2614.2618.2621.2624.2627.2628.2629.2633.2636.2642.2643.2645.2646.2650.2651.2652.2656.2657.2658.2660.2661.2669.2670.2677.2681.2684.2686.2687.2689.2690.2695.2698.2713.2714.2729.2739.2767.2768.2770.2772.2778.2784.2787.2791.2792.2798.2801.2805.2812.2813.2814.2816.2817.2821.2822.2824.2827.2830.2831.2832.2833.2834.2838.2839.2844.2846.2849.2850.2852.2854.2860.2862.2863.2865.2867.2869.2872.2874.2875.2878.2880.2881.2882.2884.2886.2887.2888.2889.2891.2893.2894.2895.2897.2898.2900.2901.2908.2909.2916.2917.2918.2920.2922.2923.2927.2929.2930.2931.2940.2941.2947.2949.2950.2956.2958.2961.2963.2964.2965.2966.2968.2970.2972.2973.2974.2975.2979.2980.2981.2983.2985.2986.2987.2994.2995.2997.2999.3000.3001.3002.3003.3005.3008.3009.3010.3012.3016.3017.3018.3019.3023.3028.3031.3034.3038.3043.3051.3052.3053.3055.3058.3059.3063.3066.3068.3070.3073.3074.3075.3076.3077.3088.3089.3090.3093.3094.3095.3097.3099.3100.3106.3107.3109.3112.3117.3119.3126.3127.3128.3130.3133.3135.3136.3137.3145.3149.3150.3151.3153.3154.3155.3163.3165.3167.3169.3172.3173.3177.3182.3183.3184.3185.3186.3187.3188.3189.3190.3194.3196.3200.3201.3209.3210.3211.3213.3214.3215.3217.3218.3222.3223.3225.3226.3227.3228.3230.3231.3233.3234.3235.3236.3237.3238.3240.3244.3245.3250.3251.3253.3254.3257.3260.3266.3270.3272.3281.3286.3288.3289.3290.3292.3293.3296.3299.3300.3306.3307.3309.3314.3315.3316.3318.3323.3324.3328.3330.3331.3531.3631.3731.3831.4131.4331.4531.4631.4731.4831.5231.6931.7131.7235.7831.7931.8931.9731.10231.10631.10831.11031.11531.11631.13431.13632.14034.14133.14237.14332.15731.16831.16931.21233.21731.23031.25131.25931.26031.26631.26831.27731.27831.28031.28332.28731.28831.29631.30331.30532.30732.32531.33931.34231.34631.34731.36831.39131.39531.40632.41131.41531.43631.43731.43831.45931.47031.47232.47531.48131.49231.49332.49431.50831.52831.54231.56831.56931.57131.57231.57531; datadome=4klolrq2pXT70XOiMMx9GpVGIfsVB1FPkm6bfIeq1r9wMK5TP59OPC5P1YjnmdAOwqjN025Fz9Q5s~bCxCKdri913jrd3XUQGtmhKfSAVGTvOg61B0ifn0Zb8EIOMcVG; domain_selected=true";
 
 function isNotDefined(value) {
-  return (value == null || (typeof value === "string" && value.trim().length === 0));
+  return (
+    value == null || (typeof value === "string" && value.trim().length === 0)
+  );
 }
 
 /**
- * Parse  
+ * Parse
  * @param  {String} data - json response
  * @return {Object} sales
  */
-const parse = data => {
+const parse = (data) => {
   try {
-    const {items} = data;
+    const { items } = data;
 
-    return items.map(item => {
+    return items.map((item) => {
       const link = item.url;
       const price = item.total_item_price;
-      const {photo} = item;
-      const published = photo.high_resolution && photo.high_resolution.timestamp;
+      const { photo } = item;
+      const published =
+        photo.high_resolution && photo.high_resolution.timestamp;
 
       return {
         link,
         price,
         title: item.title,
         published,
-        'uuid': uuidv5(link, uuidv5.URL)
-      }
-    })
-  } catch (error){
+        uuid: uuidv5(link, uuidv5.URL),
+      };
+    });
+  } catch (error) {
     console.error(error);
     return [];
   }
-}
+};
 
-
-
-const scrape = async searchText => {
+const scrape = async (searchText) => {
   try {
-
     if (isNotDefined(COOKIE)) {
       throw "vinted requires a valid cookie";
     }
 
-    const response = await fetch(`https://www.vinted.fr/api/v2/catalog/items?page=1&per_page=96&time=1727382549&search_text=${searchText}&catalog_ids=&size_ids=&brand_ids=89162&status_ids=6,1&material_ids`, {
-      "headers": {
-        "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
-        "accept-language": "fr-FR,fr;q=0.9,en-US;q=0.8,en;q=0.7",
-        "cache-control": "no-cache",
-        "pragma": "no-cache",
-        "priority": "u=0, i",
-        "sec-ch-ua": "\"Google Chrome\";v=\"129\", \"Not=A?Brand\";v=\"8\", \"Chromium\";v=\"129\"",
-        "sec-ch-ua-mobile": "?0",
-        "sec-ch-ua-platform": "\"macOS\"",
-        "sec-fetch-dest": "document",
-        "sec-fetch-mode": "navigate",
-        "sec-fetch-site": "none",
-        "sec-fetch-user": "?1",
-        "upgrade-insecure-requests": "1",
-        "cookie": COOKIE
+    const response = await fetch(
+      `https://www.vinted.fr/api/v2/catalog/items?page=1&per_page=96&time=1727382549&search_text=${searchText}&catalog_ids=&size_ids=&brand_ids=89162&status_ids=6,1&material_ids`,
+      {
+        headers: {
+          accept:
+            "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
+          "accept-language": "fr-FR,fr;q=0.9,en-US;q=0.8,en;q=0.7",
+          "cache-control": "no-cache",
+          pragma: "no-cache",
+          priority: "u=0, i",
+          "sec-ch-ua":
+            '"Google Chrome";v="129", "Not=A?Brand";v="8", "Chromium";v="129"',
+          "sec-ch-ua-mobile": "?0",
+          "sec-ch-ua-platform": '"macOS"',
+          "sec-fetch-dest": "document",
+          "sec-fetch-mode": "navigate",
+          "sec-fetch-site": "none",
+          "sec-fetch-user": "?1",
+          "upgrade-insecure-requests": "1",
+          cookie: COOKIE,
+        },
+        referrerPolicy: "strict-origin-when-cross-origin",
+        body: null,
+        method: "GET",
       },
-      "referrerPolicy": "strict-origin-when-cross-origin",
-      "body": null,
-      "method": "GET"
-    });
+    );
 
     if (response.ok) {
       const body = await response.json();
@@ -82,5 +88,4 @@ const scrape = async searchText => {
   }
 };
 
-
-export {scrape};
+export { scrape };

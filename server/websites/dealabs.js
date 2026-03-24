@@ -3,32 +3,69 @@ import { v5 as uuidv5 } from "uuid";
 
 const DEALABS_URL = "https://www.dealabs.com/groupe/lego";
 
-const extractIdFromLink = (link) => {
-  if (!link) {
-    return null;
+const toNumber = (value) => {
+  if (typeof value === "number") {
+    return value;
   }
 
-  const idFromDealPath = link.match(/\/bons-plans\/(\d{4,6})/);
-
-  if (idFromDealPath && idFromDealPath[1]) {
-    return idFromDealPath[1];
+  if (typeof value === "string") {
+    const parsed = parseFloat(value);
+    return Number.isNaN(parsed) ? 0 : parsed;
   }
 
-  const idFromSlug = link.match(/(?:^|\D)(\d{4,6})(?:\D|$)/);
-
-  return idFromSlug ? idFromSlug[1] : null;
+  return 0;
 };
 
-const parseNumber = (value) => {
-  if (!value || typeof value !== "string") {
+const toInteger = (value) => {
+  if (typeof value === "number") {
+    return Math.trunc(value);
+  }
+
+  if (typeof value === "string") {
+    const parsed = parseInt(value, 10);
+    return Number.isNaN(parsed) ? 0 : parsed;
+  }
+
+  return 0;
+};
+
+const buildDealLink = (thread) => {
+  if (thread.link && thread.link.startsWith("http")) {
+    return thread.link;
+  }
+
+  if (thread.titleSlug && thread.threadId) {
+    return `https://www.dealabs.com/bons-plans/${thread.titleSlug}-${thread.threadId}`;
+  }
+
+  if (thread.shareableLink) {
+    return thread.shareableLink;
+  }
+
+  return "";
+};
+
+const buildPhotoUrl = (thread) => {
+  const image = thread.mainImage;
+
+  if (!image || !image.path || !image.slotId || !image.name) {
+    return "";
+  }
+
+  return `https://static-pepper.dealabs.com/${image.path}/${image.slotId}/${image.name}/re/300x300/qt/60/${image.name}.jpg`;
+};
+
+const extractLegoSetId = (thread) => {
+  const candidates = [thread.title, thread.titleSlug]
+    .filter(Boolean)
+    .join(" ")
+    .match(/\b\d{4,6}\b/g);
+
+  if (!candidates || candidates.length === 0) {
     return null;
   }
 
-  const sanitized = value.replace(/[^0-9,.-]/g, "").replace(",", ".");
-
-  const number = parseFloat(sanitized);
-
-  return Number.isNaN(number) ? null : number;
+  return candidates[candidates.length - 1];
 };
 
 const parse = (html) => {
@@ -36,56 +73,61 @@ const parse = (html) => {
 
   return $("article")
     .map((_, article) => {
-      const root = $(article);
-      const anchor = root.find('a[href*="/bons-plans/"]').first();
-      const linkPath = anchor.attr("href");
+      try {
+        const div = $(article).find(".js-vue3");
+        const data = div.attr("data-vue3");
 
-      if (!linkPath) {
+        if (!data) {
+          return null;
+        }
+
+        const dataParsed = JSON.parse(data);
+        const thread = dataParsed?.props?.thread;
+
+        if (!thread) {
+          return null;
+        }
+
+        const link = buildDealLink(thread);
+        const uuid = uuidv5(
+          link || String(thread.threadId || thread.title || "dealabs"),
+          uuidv5.URL,
+        );
+
+        const price = toNumber(thread.price);
+        const retail = toNumber(thread.nextBestPrice);
+        const hasValidRetail = retail > 0;
+        const hasValidPrice = price > 0;
+
+        let discount = toInteger(thread.percentage);
+
+        if (
+          discount <= 0 &&
+          hasValidRetail &&
+          hasValidPrice &&
+          retail >= price
+        ) {
+          discount = Math.round(((retail - price) / retail) * 100);
+        }
+
+        return {
+          _id: uuid,
+          link,
+          retail,
+          price,
+          discount,
+          temperature: toNumber(thread.temperature),
+          photo: buildPhotoUrl(thread),
+          comments: toInteger(thread.commentCount),
+          published: toInteger(thread.publishedAt),
+          title: thread.title || "",
+          id: extractLegoSetId(thread),
+          community: "dealabs",
+          uuid,
+        };
+      } catch (error) {
         return null;
       }
-
-      const link = linkPath.startsWith("http")
-        ? linkPath
-        : `https://www.dealabs.com${linkPath}`;
-
-      const title =
-        anchor.text().trim() || root.find("h2, h3").first().text().trim();
-      const priceText = root
-        .find('[data-t="thread-price"], .thread-price')
-        .first()
-        .text()
-        .trim();
-      const discountText = root
-        .find('[data-t="thread-discount"], .thread-discount')
-        .first()
-        .text()
-        .trim();
-      const commentsText = root
-        .find('[data-t="comments-count"], .cept-comment-link')
-        .first()
-        .text()
-        .trim();
-      const temperatureText = root
-        .find('[data-t="temperature"], .thread-temperature')
-        .first()
-        .text()
-        .trim();
-      const photo = root.find("img").first().attr("src") || null;
-
-      return {
-        link,
-        retail: null,
-        price: parseNumber(priceText),
-        discount: parseNumber(discountText),
-        temperature: parseNumber(temperatureText),
-        photo,
-        comments: parseNumber(commentsText) || 0,
-        published: Math.floor(Date.now() / 1000),
-        title,
-        id: extractIdFromLink(link),
-        community: "dealabs",
-        uuid: uuidv5(link, uuidv5.URL),
-      };
     })
     .get()
     .filter((deal) => deal && deal.title && deal.link);
