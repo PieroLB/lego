@@ -1,0 +1,584 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lego Deal Tracker</title>
+    <style>
+      :root {
+        --bg-start: #eff6ff;
+        --bg-mid: #ffffff;
+        --bg-end: #fff7ed;
+        --text-main: #111827;
+        --text-soft: #4b5563;
+        --card-bg: #ffffff;
+        --card-border: #e5e7eb;
+        --primary: #ea580c;
+        --primary-hover: #c2410c;
+        --success: #16a34a;
+        --danger: #dc2626;
+        --shadow: 0 8px 24px rgba(17, 24, 39, 0.08);
+        --radius: 14px;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        color: var(--text-main);
+        font-family: "Segoe UI", "Inter", "Trebuchet MS", sans-serif;
+        background: linear-gradient(
+          135deg,
+          var(--bg-start),
+          var(--bg-mid) 45%,
+          var(--bg-end)
+        );
+      }
+
+      .header {
+        background: linear-gradient(
+          90deg,
+          #dc2626 0%,
+          #f97316 55%,
+          #f59e0b 100%
+        );
+        color: #fff;
+        box-shadow: var(--shadow);
+      }
+
+      .container {
+        width: min(1200px, 94vw);
+        margin: 0 auto;
+      }
+
+      .header-inner {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        padding: 24px 0;
+      }
+
+      .logo {
+        width: 54px;
+        height: 54px;
+        border-radius: 14px;
+        display: grid;
+        place-items: center;
+        background: rgba(255, 255, 255, 0.2);
+        backdrop-filter: blur(4px);
+        font-size: 30px;
+      }
+
+      .header h1 {
+        margin: 0;
+        font-size: clamp(1.45rem, 2.2vw, 2rem);
+        line-height: 1.2;
+      }
+
+      .header p {
+        margin: 6px 0 0;
+        opacity: 0.92;
+      }
+
+      main {
+        padding: 30px 0 42px;
+      }
+
+      .card {
+        background: var(--card-bg);
+        border: 1px solid var(--card-border);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+      }
+
+      .filters {
+        padding: 20px;
+      }
+
+      .filters-grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 18px;
+      }
+
+      .field label,
+      .filters-title {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 8px;
+        font-size: 0.9rem;
+        font-weight: 700;
+      }
+
+      select,
+      button {
+        font: inherit;
+      }
+
+      select {
+        width: 100%;
+        height: 40px;
+        border: 1px solid #d1d5db;
+        border-radius: 10px;
+        padding: 0 12px;
+        color: var(--text-main);
+        background: #fff;
+      }
+
+      .checkboxes {
+        display: grid;
+        gap: 10px;
+        padding-top: 2px;
+      }
+
+      .checkboxes label {
+        margin: 0;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-weight: 500;
+      }
+
+      .content-grid {
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        gap: 24px;
+        margin-top: 24px;
+      }
+
+      .stack {
+        display: grid;
+        gap: 18px;
+      }
+
+      .section {
+        padding: 20px;
+      }
+
+      .section-head {
+        margin: 0 0 14px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 1.3rem;
+      }
+
+      .lego-row {
+        display: flex;
+        gap: 10px;
+        align-items: end;
+      }
+
+      .lego-row .field {
+        flex: 1;
+      }
+
+      .btn {
+        border: 0;
+        border-radius: 10px;
+        padding: 10px 14px;
+        cursor: pointer;
+        font-weight: 600;
+      }
+
+      .btn-outline {
+        border: 1px solid #d1d5db;
+        background: #fff;
+      }
+
+      .btn-primary {
+        color: #fff;
+        background: var(--primary);
+      }
+
+      .btn-primary:hover {
+        background: var(--primary-hover);
+      }
+
+      .deals-head {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 14px;
+      }
+
+      .deals-head h3 {
+        margin: 0;
+        font-size: 1.3rem;
+      }
+
+      .badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        border-radius: 999px;
+        padding: 5px 10px;
+        font-size: 0.8rem;
+        font-weight: 700;
+        background: #f3f4f6;
+        color: #374151;
+        border: 1px solid #e5e7eb;
+      }
+
+      .deals-list {
+        display: grid;
+        gap: 12px;
+      }
+
+      .deal {
+        border: 1px solid #e5e7eb;
+        border-left: 4px solid #f97316;
+        border-radius: 12px;
+        padding: 14px;
+        background: #fff;
+        margin-bottom: 12px;
+      }
+
+      .deal a {
+        color: #111827;
+        font-weight: 700;
+        text-decoration: none;
+      }
+
+      .deal a:hover {
+        text-decoration: underline;
+      }
+
+      .deal p {
+        margin: 8px 0;
+        color: var(--text-soft);
+      }
+
+      .deal button {
+        border: 0;
+        border-radius: 10px;
+        padding: 8px 12px;
+        cursor: pointer;
+        font-weight: 700;
+        color: #fff;
+        background: var(--primary);
+      }
+
+      #sales ul {
+        margin: 0;
+        padding-left: 18px;
+        display: grid;
+        gap: 10px;
+      }
+
+      #sales li {
+        color: var(--text-soft);
+      }
+
+      #sales a {
+        color: #111827;
+        font-weight: 600;
+      }
+
+      .deal-card {
+        border: 1px solid #e5e7eb;
+        border-left: 4px solid #f97316;
+        border-radius: 12px;
+        padding: 14px;
+        background: #fff;
+      }
+
+      .deal-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: start;
+        gap: 10px;
+      }
+
+      .deal-title {
+        margin: 0;
+        font-size: 1.05rem;
+      }
+
+      .fav {
+        border: 0;
+        background: transparent;
+        cursor: pointer;
+        font-size: 1.2rem;
+        line-height: 1;
+      }
+
+      .fav.on {
+        color: #ef4444;
+      }
+
+      .meta,
+      .price-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 10px;
+      }
+
+      .price {
+        font-size: 2rem;
+        color: var(--success);
+        font-weight: 800;
+      }
+
+      .old-price {
+        text-decoration: line-through;
+        color: #9ca3af;
+        font-size: 1.2rem;
+        align-self: center;
+      }
+
+      .discount {
+        background: #22c55e;
+        color: #fff;
+        border-radius: 999px;
+        padding: 6px 10px;
+        font-weight: 800;
+        align-self: center;
+      }
+
+      .deal-actions {
+        margin-top: 12px;
+      }
+
+      .empty {
+        text-align: center;
+        color: var(--text-soft);
+        padding: 28px 10px;
+      }
+
+      .indicators {
+        position: sticky;
+        top: 20px;
+        height: fit-content;
+        padding: 20px;
+      }
+
+      .indicators h3 {
+        margin: 0 0 16px;
+        font-size: 1.25rem;
+      }
+
+      .metric {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 10px;
+        border-radius: 12px;
+        padding: 12px;
+        margin-bottom: 10px;
+      }
+
+      .metric strong {
+        font-size: 1.8rem;
+      }
+
+      .m-blue {
+        background: linear-gradient(90deg, #eff6ff, #dbeafe);
+      }
+
+      .m-green {
+        background: linear-gradient(90deg, #f0fdf4, #dcfce7);
+      }
+
+      .m-orange {
+        background: linear-gradient(90deg, #fff7ed, #ffedd5);
+      }
+
+      .percentiles {
+        border-top: 1px solid #e5e7eb;
+        margin-top: 14px;
+        padding-top: 14px;
+      }
+
+      .percentiles p {
+        margin: 0 0 10px;
+        font-weight: 700;
+      }
+
+      .pill {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-radius: 10px;
+        background: #f9fafb;
+        padding: 10px;
+        margin-bottom: 8px;
+      }
+
+      .pill.median {
+        border: 1px solid #bfdbfe;
+        background: #eff6ff;
+        color: #1d4ed8;
+        font-weight: 700;
+      }
+
+      .icon {
+        opacity: 0.9;
+      }
+
+      @media (max-width: 1060px) {
+        .filters-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .content-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .indicators {
+          position: static;
+        }
+      }
+
+      @media (max-width: 700px) {
+        .filters-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .header-inner {
+          padding: 20px 0;
+        }
+
+        .lego-row {
+          flex-direction: column;
+          align-items: stretch;
+        }
+
+        .price {
+          font-size: 1.7rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="header">
+      <div class="container header-inner">
+        <div class="logo">🧱</div>
+        <div>
+          <h1>Lego Deal Tracker</h1>
+          <p>Predictability of a lego set deal</p>
+        </div>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="card filters">
+        <div class="filters-grid">
+          <div class="field">
+            <label for="show-select">Afficher :</label>
+            <select id="show-select">
+              <option value="6">6 items</option>
+              <option value="12">12 items</option>
+              <option value="24">24 items</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="page-select">Aller à la page :</label>
+            <select id="page-select"></select>
+          </div>
+
+          <div class="field">
+            <label for="sort-select"><span class="icon">↕</span>Trier :</label>
+            <select id="sort-select">
+              <option value="price-asc">Cheaper</option>
+              <option value="price-desc">Expensive</option>
+              <option value="date-asc">Recently published</option>
+              <option value="date-desc">Anciently published</option>
+            </select>
+          </div>
+
+          <div>
+            <div class="filters-title">
+              <span class="icon">⛭</span>Filtres :
+            </div>
+            <div class="checkboxes">
+              <label
+                ><input type="checkbox" id="filter-discount" /> Discount ≥
+                50%</label
+              >
+              <label
+                ><input type="checkbox" id="filter-commented" /> Most
+                commented</label
+              >
+              <label
+                ><input type="checkbox" id="filter-deals" /> Hot deals</label
+              >
+              <label
+                ><input type="checkbox" id="filter-favorite" /> Favorites</label
+              >
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="content-grid">
+        <div class="stack">
+          <section class="card section">
+            <h2 class="section-head"><span class="icon">📦</span> Lego Sets</h2>
+            <div class="lego-row">
+              <div class="field">
+                <label for="lego-set-id-select">Select Lego set ID:</label>
+                <select id="lego-set-id-select"></select>
+              </div>
+            </div>
+          </section>
+
+          <section class="card section" id="deals">
+            <div class="deals-head">
+              <h3>Deals</h3>
+              <span class="badge">0 deals</span>
+            </div>
+            <div class="deals-list"></div>
+          </section>
+
+          <section class="card section" id="sales">
+            <h3>Vinted Sales</h3>
+            <p>Aucune vente pour ce set.</p>
+          </section>
+        </div>
+
+        <aside class="card indicators">
+          <h3><span class="icon">📊</span> Indicators</h3>
+
+          <div class="metric m-blue">
+            <span>Number of deals</span>
+            <strong id="nbDeals">0</strong>
+          </div>
+
+          <div class="metric m-green">
+            <span>Number of sales</span>
+            <strong id="nbSales">0</strong>
+          </div>
+
+          <div class="percentiles">
+            <p>Sales Price Percentiles</p>
+            <div class="pill">
+              <span>p5 value</span><strong id="p5">0</strong>
+            </div>
+            <div class="pill">
+              <span>p25 value</span><strong id="p25">0</strong>
+            </div>
+            <div class="pill median">
+              <span>p50 value (median)</span><strong id="p50">0</strong>
+            </div>
+          </div>
+
+          <div class="metric m-orange">
+            <span>Lifetime value</span>
+            <strong id="lifetime">n/a</strong>
+          </div>
+        </aside>
+      </div>
+    </main>
+
+    <script type="text/javascript" charset="UTF-8" src="utils.js"></script>
+    <script type="text/javascript" charset="UTF-8" src="portfolio.js"></script>
+  </body>
+</html>
