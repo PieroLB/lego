@@ -1,6 +1,7 @@
 "use strict";
 
-const API_BASE_URL = "https://lego-api-blue.vercel.app";
+const API_BASE_URL = "https://plbwebdesignlegoserver.vercel.app";
+// const API_BASE_URL = "http://localhost:8092";
 const FAVORITES_STORAGE_KEY = "FAVORITE_DEALS";
 
 const state = {
@@ -155,7 +156,7 @@ const fetchSales = async (legoSetId) => {
       return [];
     }
 
-    const response = await fetch(`${API_BASE_URL}/sales?id=${legoSetId}`);
+    const response = await fetch(`${API_BASE_URL}/deals/${legoSetId}`);
     const body = await response.json();
 
     if (
@@ -288,7 +289,7 @@ const render = async () => {
 
   renderDeals(state.currentDeals);
   renderPagination(state.currentPagination);
-  renderLegoSetIds(state.rawDeals);
+  if (!sales) renderLegoSetIds(state.rawDeals);
   renderSales(sales);
   renderIndicators(state.currentDeals, sales, state.currentPagination);
 };

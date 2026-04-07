@@ -56,6 +56,47 @@ app.get("/", (request, response) => {
   response.send({ ack: true });
 });
 
+app.get("/deals", (request, response) => {
+  try {
+    const { siz, size, page = "1" } = request.query;
+    const pageSize = Math.max(1, parseInt(siz || size || "12", 10) || 12);
+    const currentPage = Math.max(1, parseInt(page, 10) || 1);
+
+    const count = DEALS.length;
+    const pageCount = Math.ceil(count / pageSize);
+    const startIndex = (currentPage - 1) * pageSize;
+    const endIndex = startIndex + pageSize;
+    const pagedResult = DEALS.slice(startIndex, endIndex);
+
+    return response.status(200).json({
+      success: true,
+      data: {
+        result: pagedResult,
+        meta: {
+          currentPage,
+          pageCount,
+          pageSize,
+          count,
+        },
+      },
+    });
+  } catch (error) {
+    console.log(error);
+    return response.status(500).json({
+      success: false,
+      data: {
+        result: [],
+        meta: {
+          currentPage: 1,
+          pageCount: 0,
+          pageSize: 0,
+          count: 0,
+        },
+      },
+    });
+  }
+});
+
 app.get("/deals/search", (request, response) => {
   try {
     const { limit = "12", price, date, filterBy } = request.query;
@@ -119,7 +160,7 @@ app.get("/deals/search", (request, response) => {
 app.get("/deals/:id", (request, response) => {
   try {
     const { id } = request.params;
-    const deal = DEALS.find((item) => item.uuid === id || item._id === id);
+    const deal = DEALS.find((item) => item.uuid === id || item.id === id);
 
     if (!deal) {
       return response.status(404).json({
@@ -172,6 +213,10 @@ app.get("/sales/search", (request, response) => {
   }
 });
 
-app.listen(PORT, () => {
-  console.log(`📡 Running on port ${PORT}`);
-});
+export default app;
+
+if (process.env.VERCEL !== "1") {
+  app.listen(PORT, () => {
+    console.log(`Running on port ${PORT}`);
+  });
+}

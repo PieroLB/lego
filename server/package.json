@@ -3,6 +3,13 @@
   "version": "0.0.1",
   "description": "First bricks for profitability",
   "main": "index.js",
+  "scripts": {
+    "start": "node api.js",
+    "dev": "nodemon api.js"
+  },
+  "engines": {
+    "node": "20.x"
+  },
   "repository": "git@github.com:92bondstreet/lego.git",
   "type": "module",
   "dependencies": {
